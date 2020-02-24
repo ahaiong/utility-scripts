@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+#safety check
+which assume_role > /dev/null || { echo "no assume_role wrapper file, aborting cowardly"; exit 1; }
+
+# getopt not working with quotations, using "minimal" positional parameters 
+ACCOUNT=$2
+ROLE=$3
+SERIAL=$4
+
+test -z $ACCOUNT && read -p "AWS Account id: " ACCOUNT
+test -z "$ACCOUNT" && { echo "You need an account id, aborting cowardly"; exit 1; }
+
+test -z $ROLE && read -p "AWS Role: " ROLE
+test -z $ROLE && { echo "You need an role, aborting cowardly"; exit 1; }
+
+. assume_role $ACCOUNT $ROLE $SERIAL
+
+$1
