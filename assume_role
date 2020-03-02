@@ -14,14 +14,11 @@ if [ -z $SERIAL ]; then
   KST="$(aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT:role/$ROLE" --role-session-name "Session1" --output text)"
 else
   read -p "Enter the token code: " token
-  echo "aws sts assume-role --role-arn=\"arn:aws:iam::$ACCOUNT:role/$ROLE\" --role-session-name=\"Session1\" --token-code=${token} --output=text --serial-number=\"${SERIAL}\"" 
   KST="$(aws sts assume-role --role-arn="arn:aws:iam::$ACCOUNT:role/$ROLE" --role-session-name="Session1" --token-code="${token}" --output=text --serial-number=${SERIAL})"
 fi
 
 arr=($KST)
 
-export AWS_DEFAULT_REGION=ap-southeast-2
-#export AWS_DEFAULT_REGION=eu-west-1
 export AWS_ACCESS_KEY_ID=${arr[4]}
 export AWS_ACCESS_KEY=${arr[4]}
 export AWS_SECRET_ACCESS_KEY=${arr[6]}
